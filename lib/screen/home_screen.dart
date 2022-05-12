@@ -14,13 +14,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: [
-          Image.asset('assets/img/image_1.jpeg'),
-          Image.asset('assets/img/image_2.jpeg'),
-          Image.asset('assets/img/image_3.jpeg'),
-          Image.asset('assets/img/image_4.jpeg'),
-          Image.asset('assets/img/image_5.jpeg')
-        ],
+        children: [1, 2, 3, 4, 5]
+            .map((e) => Image.asset(
+                  'assets/img/image_$e.jpeg',
+                  fit: BoxFit.cover,
+                ))
+            .toList(),
       ),
     );
   }

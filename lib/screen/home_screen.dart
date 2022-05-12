@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
+                flex: 2,
                 child: Container(
                   width: 50.0,
                   height: 50.0,
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: 4,
                 child: Container(
                   width: 50.0,
                   height: 50.0,

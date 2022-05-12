@@ -12,25 +12,33 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 50.0,
-                height: 50.0,
-                color: Colors.red,
+              Expanded(
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  color: Colors.red,
+                ),
               ),
-              Container(
-                width: 50.0,
-                height: 50.0,
-                color: Colors.orange,
+              Expanded(
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  color: Colors.orange,
+                ),
               ),
-              Container(
-                width: 50.0,
-                height: 50.0,
-                color: Colors.yellow,
+              Expanded(
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  color: Colors.yellow,
+                ),
               ),
-              Container(
-                width: 50.0,
-                height: 50.0,
-                color: Colors.green,
+              Expanded(
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  color: Colors.green,
+                ),
               ),
             ],
           ),

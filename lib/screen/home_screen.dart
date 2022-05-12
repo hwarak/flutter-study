@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           color: Colors.black,
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 50.0,

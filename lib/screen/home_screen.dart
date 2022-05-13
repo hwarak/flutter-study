@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/constant/color.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PRIMARY_COLOR,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,8 +20,19 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("랜덤숫자 생성기"),
-                IconButton(onPressed: () {}, icon: Icon(Icons.settings))
+                const Text(
+                  "랜덤숫자 생성기",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w700),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.settings,
+                      color: RED_COLOR,
+                    ))
               ],
             ),
             Expanded(
@@ -35,8 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: RED_COLOR, //primary : 주 색상, 활성화가 되었을때 보이는 색상을 의미함
+                ),
                 onPressed: () {},
-                child: Text("생성하기"),
+                child: const Text("생성하기"),
               ),
             )
           ],

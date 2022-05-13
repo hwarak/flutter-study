@@ -38,6 +38,7 @@ class _TopPartState extends State<_TopPart> {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,7 +105,11 @@ class _TopPartState extends State<_TopPart> {
             ),
           ),
           Text(
-            "D+1",
+            "D+${DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                ).difference(selectedDate).inDays + 1}",
             style: TextStyle(
               color: Colors.white,
               fontFamily: "sunflower",

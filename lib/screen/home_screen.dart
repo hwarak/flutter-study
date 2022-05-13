@@ -11,40 +11,37 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TestWidget(
-              // 우리가 build 타임에 모든 값들을 다 알 수 있을때만 const를 쓸 수 있다
-              // "test1" 이라는 글자는 build타임때 변경 안되니까 사용 가능
-              label: "test1",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("랜덤숫자 생성기"),
+                IconButton(onPressed: () {}, icon: Icon(Icons.settings))
+              ],
             ),
-            TestWidget(
-              label: "test2",
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("123"),
+                  Text("456"),
+                  Text("789"),
+                ],
+              ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {});
-                },
-                child: Text("build!!"))
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("생성하기"),
+              ),
+            )
           ],
         ),
       ),
-    );
-  }
-}
-
-class TestWidget extends StatelessWidget {
-  final String label;
-  const TestWidget({required this.label, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    print('$label build 실행');
-    return Container(
-      child: Text(label),
     );
   }
 }

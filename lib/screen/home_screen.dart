@@ -34,7 +34,11 @@ class _TopPart extends StatefulWidget {
 }
 
 class _TopPartState extends State<_TopPart> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +91,12 @@ class _TopPartState extends State<_TopPart> {
                       color: Colors.white,
                       height: 300.0,
                       child: CupertinoDatePicker(
+                        initialDateTime: selectedDate,
+                        maximumDate: DateTime(
+                          DateTime.now().year,
+                          DateTime.now().month,
+                          DateTime.now().day,
+                        ),
                         mode: CupertinoDatePickerMode.date,
                         onDateTimeChanged: (DateTime date) {
                           setState(() {

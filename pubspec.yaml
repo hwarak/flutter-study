@@ -59,10 +59,10 @@ flutter:
         - asset: assets/fonts/Parisienne-Regular.ttf
     - family: sunflower
       fonts:
-        - asset: ssets/fonts/Sunflower-Light.ttf
-        - asset: ssets/fonts/Sunflower-Medium.ttf
+        - asset: assets/fonts/Sunflower-Light.ttf
+        - asset: assets/fonts/Sunflower-Medium.ttf
           weight: 500
-        - asset: ssets/fonts/Sunflower-Bold.ttf
+        - asset: assets/fonts/Sunflower-Bold.ttf
           weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

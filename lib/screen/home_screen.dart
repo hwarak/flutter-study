@@ -1,65 +1,121 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() {
-    return _HomeScreenState();
-  }
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Timer? timer;
-  PageController controller = PageController(
-    initialPage: 0,
-  );
-
   @override
-  void initState() {
-    super.initState();
-
-    timer = Timer.periodic(Duration(seconds: 4), (timer) {
-      int currentPage = controller.page!.toInt();
-      int nextPage = currentPage + 1;
-
-      if (nextPage > 4) {
-        nextPage = 0;
-      }
-
-      controller.animateToPage(
-        nextPage,
-        duration: Duration(milliseconds: 400),
-        curve: Curves.linear,
-      );
-    });
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.pink[100],
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [_TopPart(), _BottomPart()],
+          ),
+        ),
+      ),
+    );
   }
+}
 
-  @override
-  void dispose() {
-    controller.dispose();
-    if (timer != null) {
-      timer!.cancel();
-    }
-    super.dispose();
-  }
+class _TopPart extends StatelessWidget {
+  const _TopPart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    return Scaffold(
-      body: PageView(
-        controller: controller,
-        children: [1, 2, 3, 4, 5]
-            .map((e) => Image.asset(
-                  'assets/images/image_$e.jpeg',
-                  fit: BoxFit.cover,
-                ))
-            .toList(),
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            "U&I",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'parisienne',
+              fontSize: 80.0,
+            ),
+          ),
+          Column(
+            children: [
+              Text(
+                "우리 처음 만난 날",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "sunflower",
+                  fontSize: 30.0,
+                ),
+              ),
+              Text(
+                "2022.12.27",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "sunflower",
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
+          IconButton(
+            iconSize: 60.0,
+            onPressed: () {
+              // dialog 화면을 덮는 또 하나의 화면을 만들어 줄거임
+              // builder 화면 안에 들어갈 위젯을 여기다 넣어줄거여
+              // 우리가 자주 쓰는 build함수라고 생각하면 됨
+              showCupertinoDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.white,
+                      height: 300.0,
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        onDateTimeChanged: (DateTime date) {
+                          print(date);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            icon: Icon(
+              Icons.favorite,
+              color: Colors.red,
+            ),
+          ),
+          Text(
+            "D+1",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "sunflower",
+              fontSize: 50.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class _BottomPart extends StatelessWidget {
+  const _BottomPart({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Image.asset('assets/images/middle_image.png'),
     );
   }
 }

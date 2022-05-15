@@ -42,41 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: 123
-                          .toString()
-                          .split('')
-                          .map((e) => Image.asset(
-                                'assets/images/$e.png',
-                                height: 70.0,
-                                width: 50.0,
-                              ))
-                          .toList(),
-                    ),
-                    Row(
-                      children: 456
-                          .toString()
-                          .split('')
-                          .map((e) => Image.asset(
-                                'assets/images/$e.png',
-                                height: 70.0,
-                                width: 50.0,
-                              ))
-                          .toList(),
-                    ),
-                    Row(
-                      children: 789
-                          .toString()
-                          .split('')
-                          .map((e) => Image.asset(
-                                'assets/images/$e.png',
-                                height: 70.0,
-                                width: 50.0,
-                              ))
-                          .toList(),
-                    ),
-                  ],
+                  children: [123, 456, 789]
+                      .map((x) => Row(
+                            children: x
+                                .toString()
+                                .split('')
+                                .map((e) => Image.asset(
+                                      'assets/images/$e.png',
+                                      height: 70.0,
+                                      width: 50.0,
+                                    ))
+                                .toList(),
+                          ))
+                      .toList(),
                 ),
               ),
               SizedBox(

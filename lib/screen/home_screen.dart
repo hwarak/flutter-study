@@ -47,11 +47,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: 123
                           .toString()
                           .split('')
-                          .map((e) => Image.asset('assets/images/$e.png'))
+                          .map((e) => Image.asset(
+                                'assets/images/$e.png',
+                                height: 70.0,
+                                width: 50.0,
+                              ))
                           .toList(),
                     ),
-                    Row(),
-                    Row(),
+                    Row(
+                      children: 456
+                          .toString()
+                          .split('')
+                          .map((e) => Image.asset(
+                                'assets/images/$e.png',
+                                height: 70.0,
+                                width: 50.0,
+                              ))
+                          .toList(),
+                    ),
+                    Row(
+                      children: 789
+                          .toString()
+                          .split('')
+                          .map((e) => Image.asset(
+                                'assets/images/$e.png',
+                                height: 70.0,
+                                width: 50.0,
+                              ))
+                          .toList(),
+                    ),
                   ],
                 ),
               ),

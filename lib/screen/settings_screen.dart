@@ -53,7 +53,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // 뒤로가기
+                  // pop : 현재 화면을 터뜨리자!!
+                  Navigator.of(context).pop();
+                },
                 child: Text('저장'),
                 style: ElevatedButton.styleFrom(
                   primary: RED_COLOR,

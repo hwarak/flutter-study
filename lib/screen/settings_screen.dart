@@ -9,7 +9,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  double maxNumber = 10000;
+  double maxNumber = 1000;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +38,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Slider(
                 value: maxNumber,
-                min: 10000,
-                max: 1000000,
+                min: 1000,
+                max: 100000,
                 onChanged: (double val) {
                   setState(() {
                     // onChanged가 불릴때마다, 즉  Slider의 값이 변경이 될 때마다

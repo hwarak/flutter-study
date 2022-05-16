@@ -67,14 +67,16 @@ class _Header extends StatelessWidget {
               color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.w700),
         ),
         IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
+            onPressed: () async {
+              final result = await Navigator.of(context).push<int>(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return SettingsScreen();
                   },
                 ),
               );
+
+              print(result);
             },
             icon: Icon(
               Icons.settings,

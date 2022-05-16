@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onPressed: () {
                   // 뒤로가기
                   // pop : 현재 화면을 터뜨리자!!
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(maxNumber.toInt());
                 },
                 child: Text('저장'),
                 style: ElevatedButton.styleFrom(

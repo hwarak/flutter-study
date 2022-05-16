@@ -77,14 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   onPressed: () {
                     final rand = Random();
-                    final List<int> newNumbers = [];
+                    final Set<int> newNumbers = {};
 
-                    for (int i = 0; i < 3; i++) {
+                    while (newNumbers.length < 3) {
                       newNumbers.add(rand.nextInt(1000));
                     }
 
                     setState(() {
-                      randomNumbers = newNumbers;
+                      randomNumbers = newNumbers.toList();
                     });
                   },
                   child: const Text("생성하기"),

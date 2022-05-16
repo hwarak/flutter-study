@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constant/color.dart';
+import 'package:flutter_project/screen/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -66,7 +67,15 @@ class _Header extends StatelessWidget {
               color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.w700),
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return SettingsScreen();
+                  },
+                ),
+              );
+            },
             icon: Icon(
               Icons.settings,
               color: RED_COLOR,

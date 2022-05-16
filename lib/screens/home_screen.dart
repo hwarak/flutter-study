@@ -52,6 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Colors.red;
                   },
                 ),
+                padding: MaterialStateProperty.resolveWith(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return EdgeInsets.all(100.0);
+                    }
+                    return EdgeInsets.all(20.0);
+                  },
+                ),
               ),
             ),
             ElevatedButton(

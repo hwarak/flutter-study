@@ -24,7 +24,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               Expanded(
                 child: Row(
-                  children: 10000
+                  children: maxNumber
+                      .toInt()
                       .toString()
                       .split('')
                       .map((e) => Image.asset(

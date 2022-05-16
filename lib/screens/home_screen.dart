@@ -42,10 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             OutlinedButton(
               onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                primary: Colors.green,
+              ),
               child: Text('OutlinedButton'),
             ),
             TextButton(
               onPressed: () {},
+              style: TextButton.styleFrom(
+                primary: Colors.brown,
+              ),
               child: Text('TextButton'),
             )
           ],

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constant/color.dart';
 
@@ -9,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<int> randomNumbers = [123, 456, 789];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [123, 456, 789]
+                  children: randomNumbers
                       .asMap()
                       .entries
                       .map(
@@ -72,7 +75,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: ElevatedButton.styleFrom(
                     primary: RED_COLOR, //primary : 주 색상, 활성화가 되었을때 보이는 색상을 의미함
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    final rand = Random();
+                    final List<int> newNumbers = [];
+
+                    for (int i = 0; i < 3; i++) {
+                      newNumbers.add(rand.nextInt(1000));
+                    }
+
+                    setState(() {
+                      randomNumbers = newNumbers;
+                    });
+                  },
                   child: const Text("생성하기"),
                 ),
               )

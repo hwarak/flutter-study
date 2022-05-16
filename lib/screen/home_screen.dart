@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int maxNumber = 1000;
   List<int> randomNumbers = [123, 456, 789];
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Header(),
+              _Header(onPressed: onSettingsPop),
               _Body(
                 randomNumbers: randomNumbers,
               ),
@@ -44,17 +45,39 @@ class _HomeScreenState extends State<HomeScreen> {
     final Set<int> newNumbers = {};
 
     while (newNumbers.length < 3) {
-      newNumbers.add(rand.nextInt(1000));
+      newNumbers.add(rand.nextInt(maxNumber));
     }
 
     setState(() {
       randomNumbers = newNumbers.toList();
     });
   }
+
+  void onSettingsPop() async {
+    // 사실 push<int> 이렇게 작성해서 result타입을 int라고 생각할 수 있지만
+    // result는 int? 타입임 !!! 이유는
+    // setting screen에서 버튼을 눌러야만 값이 넘어오는데
+    // 모바일에서 그냥 뒤로가는 제스처해서 돌아오면 값이 없을수도 있음!!
+    // 중요 ! : 그래서 네비게이션에서 리턴받는값은 null이 될 가능성이 무조~건 있음 !!!!!
+    final result = await Navigator.of(context).push<int>(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return SettingsScreen();
+        },
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        maxNumber = result;
+      });
+    }
+  }
 }
 
 class _Header extends StatelessWidget {
-  const _Header({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+  const _Header({required this.onPressed, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,20 +87,13 @@ class _Header extends StatelessWidget {
         const Text(
           "랜덤숫자 생성기",
           style: TextStyle(
-              color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.w700),
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         IconButton(
-            onPressed: () async {
-              final result = await Navigator.of(context).push<int>(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SettingsScreen();
-                  },
-                ),
-              );
-
-              print(result);
-            },
+            onPressed: onPressed,
             icon: Icon(
               Icons.settings,
               color: RED_COLOR,

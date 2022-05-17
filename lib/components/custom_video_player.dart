@@ -67,6 +67,15 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         children: [
           VideoPlayer(videoPlayerController!),
           _Controls(),
+          Positioned(
+            right: 0, // 오른쪽 끝에서 0px만큼 이동시켜라
+            child: IconButton(
+              onPressed: () {},
+              color: Colors.white,
+              iconSize: 30.0,
+              icon: Icon(Icons.photo_camera_back),
+            ),
+          )
         ],
       ),
     );

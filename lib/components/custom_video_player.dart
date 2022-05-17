@@ -66,7 +66,11 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       child: Stack(
         children: [
           VideoPlayer(videoPlayerController!),
-          _Controls(),
+          _Controls(
+            onForwardPressed: onForwardPressed,
+            onPlayPressed: onPlayPressed,
+            onReversePressed: onReversePressed,
+          ),
           Positioned(
             right: 0, // 오른쪽 끝에서 0px만큼 이동시켜라
             child: IconButton(
@@ -80,10 +84,23 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       ),
     );
   }
+
+  void onForwardPressed() {}
+  void onPlayPressed() {}
+  void onReversePressed() {}
 }
 
 class _Controls extends StatelessWidget {
-  const _Controls({Key? key}) : super(key: key);
+  final VoidCallback onPlayPressed;
+  final VoidCallback onReversePressed;
+  final VoidCallback onForwardPressed;
+
+  const _Controls(
+      {Key? key,
+      required this.onPlayPressed,
+      required this.onReversePressed,
+      required this.onForwardPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,15 +111,15 @@ class _Controls extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           renderIconButton(
-            onPressed: () {},
+            onPressed: onReversePressed,
             iconData: Icons.rotate_left,
           ),
           renderIconButton(
-            onPressed: () {},
+            onPressed: onPlayPressed,
             iconData: Icons.play_arrow,
           ),
           renderIconButton(
-            onPressed: () {},
+            onPressed: onForwardPressed,
             iconData: Icons.rotate_right,
           ),
         ],

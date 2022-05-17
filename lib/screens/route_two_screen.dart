@@ -10,6 +10,8 @@ class RouteTwo extends StatelessWidget {
     // 모달라우트는 풀 스크린을 얘기하는데 여기서는 RouteTwo임
     // 왜냐? 지금 RouteTwo build가 실행이 되어있을테니까
     // 고로 RouteTwo의 값을 가져오는거임!
+    // 그리고 특정상황일때 ModalRoute를 못가져올수 있어서 빨간줄이 뜨지만
+    // 지금 우리가 구현하고자 하는건 null이 될 일이 없어서 ModalRoute.of(context)! <- 느낌표 추가
 
     final arguments = ModalRoute.of(context)!.settings.arguments;
     return MainLayout(

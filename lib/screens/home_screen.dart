@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/layouts/main_layout.dart';
-import 'package:flutter_project/screens/route_one_screen.dart';
+import 'package:flutter_project/components/custom_video_player.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -10,54 +10,110 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  XFile? video;
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // async 필수
-        // return true : pop 가능
-        // return false : pop 불가능
-        final canPop =
-            Navigator.of(context).canPop(); //  이렇게 변수에 담아놓고 조건문으로 사용 가능
-        return false; // 시스템 뒤로가기 버튼을 눌러도 동작 안함
-      },
-      child: MainLayout(
-        title: "Home Screen",
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              // pop을 할 수 있는 상태인지 알 수 있음
-              print(Navigator.of(context).canPop());
-            },
-            child: Text("canPop"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).maybePop();
-              // 우리가 더이상 뒤로 갈 페이지가 없을 경우 안넘어가짐!
-            },
-            child: Text("maybePop"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Pop"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final result = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => RouteOne(number: 123),
-                ),
-              );
+    return SafeArea(
+      child: Scaffold(
+        body: video != null ? renderVideo() : renderEmpty(),
+      ),
+    );
+  }
 
-              print(result);
-            },
-            child: Text('push'),
-          ),
+  Widget renderVideo() {
+    return Container(
+      child: CustomVideoPlayer(
+        // 비디오가 null이 될 수 있어서 빨간줄이 뜨지만, 우리는 무조건 값이 있을때만 실행할거라 !를 붙혀주자
+        video: video!,
+      ),
+    );
+  }
+
+  Widget renderEmpty() {
+    // 영상이 선택되지 않았을때 렌더링 하는 화면
+    return Container(
+      decoration: getBoxdecoration(),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _Logo(onTap: onLogoTab),
+            SizedBox(
+                // 간격 줄려고 이렇게 쓰는 경우도 많음
+                height: 30.0),
+            _AppName()
+          ],
+        ),
+      ),
+    );
+  }
+
+  void onLogoTab() async {
+    final video = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
+
+    if (video != null) {
+      setState(() {
+        this.video = video;
+      });
+    }
+  }
+
+  BoxDecoration getBoxdecoration() {
+    return BoxDecoration(
+      // RadialGradient : 가운데부터 색이 동그랗게 퍼짐
+      // LinearGradient : 시작부터 끝까지 일괄적으로 색이 점차 바뀐다.
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFF2A3A7C),
+          Color(0xff000118),
         ],
       ),
+    );
+  }
+}
+
+class _Logo extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _Logo({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Image.asset('assets/images/logo.png'),
+      onTap: onTap,
+    );
+  }
+}
+
+class _AppName extends StatelessWidget {
+  const _AppName({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 30.0,
+      fontWeight: FontWeight.w300,
+    );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Video",
+          style: textStyle,
+        ),
+        Text(
+          "Player",
+          // copyWith() : 이미 설정해놓은 값들은 유지를 하고 추가값들만 덮어씌우자!
+          style: textStyle.copyWith(fontWeight: FontWeight.w700),
+        ),
+      ],
     );
   }
 }

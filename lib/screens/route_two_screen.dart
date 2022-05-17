@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/layouts/main_layout.dart';
 
-class RouteTwo extends StatefulWidget {
-  RouteTwo({Key? key}) : super(key: key);
+class RouteTwo extends StatelessWidget {
+  const RouteTwo({Key? key}) : super(key: key);
 
-  @override
-  State<RouteTwo> createState() => _RouteTwoState();
-}
-
-class _RouteTwoState extends State<RouteTwo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("Route Two"),
-      ),
+    // .of(context) : 위젯트리에서 제일 가까운 모달라우트를 가져올 수 있다.
+    // 모달라우트는 풀 스크린을 얘기하는데 여기서는 RouteTwo임
+    // 왜냐? 지금 RouteTwo build가 실행이 되어있을테니까
+    // 고로 RouteTwo의 값을 가져오는거임!
+
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    return MainLayout(
+      title: "Route Two",
+      children: [
+        Text(
+          'arguments: $arguments',
+          textAlign: TextAlign.center,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("pop"),
+        )
+      ],
     );
   }
 }

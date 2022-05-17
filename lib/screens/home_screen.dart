@@ -16,12 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
       title: "Home Screen",
       children: [
         ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
+          onPressed: () async {
+            final result = await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (BuildContext context) => RouteOne(),
+                builder: (BuildContext context) => RouteOne(number: 123),
               ),
             );
+
+            print(result);
           },
           child: Text('push'),
         ),

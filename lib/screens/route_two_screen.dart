@@ -24,7 +24,15 @@ class RouteTwo extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text("pop"),
-        )
+        ),
+        ElevatedButton(
+          onPressed: () {
+            //pushNamed 는 setting값을 쓸 수 없음.
+            // 값을 전달해주고싶으면 파라미터에 바로 등록하면됨
+            Navigator.of(context).pushNamed('/three', arguments: 999);
+          },
+          child: Text("Push Named"),
+        ),
       ],
     );
   }

@@ -4,8 +4,8 @@ import 'package:flutter_project/screens/route_two_screen.dart';
 import '../layouts/main_layout.dart';
 
 class RouteOne extends StatelessWidget {
-  final int number;
-  const RouteOne({Key? key, required this.number}) : super(key: key);
+  final int? number;
+  const RouteOne({Key? key, this.number}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

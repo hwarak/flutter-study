@@ -61,8 +61,8 @@ class RouteTwo extends StatelessWidget {
         ),
         ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => RouteThree()),
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/three',
                 // 스택에 [HomeScreen, RouteOne, RouteTwo, RouteThree] 이렇게 쌓여있는데
                 // RouteThree 전에 애들을 하나씩 비교하는거야
                 // route.settings.name이  "/"야?? 맞으면 냅두고 틀리면 삭제해!

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/layouts/main_layout.dart';
+import 'package:flutter_project/screens/route_three_screen.dart';
 
 class RouteTwo extends StatelessWidget {
   const RouteTwo({Key? key}) : super(key: key);
@@ -35,6 +36,23 @@ class RouteTwo extends StatelessWidget {
           },
           child: Text("Push Named"),
         ),
+        ElevatedButton(
+            onPressed: () {
+              // 우리가 지금까지는 [HomeScreen, RouteOne, RouteTwo, RouteThree...]
+              // 이런식으로 페이지가 쌓였기 떄문에 RouteThree에서 pop()을 실행하면
+              // RouteTwo가 나와야했었는데
+              // pushReplacement를 사용하면
+              // [HomeScreen, RouteOne, RouteTwo, RouteThree] -> [HomeScreen, RouteOne, RouteThree]
+              // RouteTwo 를 지워버림 !! 대체하는것과 같지.
+              // 그래서 지금 이 상태에서 RouteThree에서 pop() 실행하면 RouteOne으로 돌아감
+
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => RouteThree(),
+                ),
+              );
+            },
+            child: Text("Push Replacement"))
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/components/custom_video_player.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,8 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderVideo() {
-    return Center(
-      child: Text('Video'),
+    return Container(
+      child: CustomVideoPlayer(
+        // 비디오가 null이 될 수 있어서 빨간줄이 뜨지만, 우리는 무조건 값이 있을때만 실행할거라 !를 붙혀주자
+        video: video!,
+      ),
     );
   }
 

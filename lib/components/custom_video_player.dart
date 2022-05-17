@@ -63,7 +63,52 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     return AspectRatio(
       // 원본 바율로 확인 가능
       aspectRatio: videoPlayerController!.value.aspectRatio,
-      child: VideoPlayer(videoPlayerController!),
+      child: Stack(
+        children: [
+          VideoPlayer(videoPlayerController!),
+          _Controls(),
+        ],
+      ),
+    );
+  }
+}
+
+class _Controls extends StatelessWidget {
+  const _Controls({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        renderIconButton(
+          onPressed: () {},
+          iconData: Icons.rotate_left,
+        ),
+        renderIconButton(
+          onPressed: () {},
+          iconData: Icons.play_arrow,
+        ),
+        renderIconButton(
+          onPressed: () {},
+          iconData: Icons.rotate_right,
+        ),
+      ],
+    );
+  }
+
+  Widget renderIconButton({
+    required VoidCallback onPressed,
+    required IconData iconData,
+  }) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        iconData,
+        size: 30.0,
+        color: Colors.white,
+      ),
     );
   }
 }

@@ -13,8 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   XFile? video;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: video != null ? renderVideo() : renderEmpty(),
+    return SafeArea(
+      child: Scaffold(
+        body: video != null ? renderVideo() : renderEmpty(),
+      ),
     );
   }
 

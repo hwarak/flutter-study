@@ -78,23 +78,26 @@ class _Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        renderIconButton(
-          onPressed: () {},
-          iconData: Icons.rotate_left,
-        ),
-        renderIconButton(
-          onPressed: () {},
-          iconData: Icons.play_arrow,
-        ),
-        renderIconButton(
-          onPressed: () {},
-          iconData: Icons.rotate_right,
-        ),
-      ],
+    return Container(
+      color: Colors.black.withOpacity(0.5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          renderIconButton(
+            onPressed: () {},
+            iconData: Icons.rotate_left,
+          ),
+          renderIconButton(
+            onPressed: () {},
+            iconData: Icons.play_arrow,
+          ),
+          renderIconButton(
+            onPressed: () {},
+            iconData: Icons.rotate_right,
+          ),
+        ],
+      ),
     );
   }
 

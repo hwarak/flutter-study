@@ -60,6 +60,10 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // 그래서 null처리 해줘야함. null일 경우 로딩바 추가
     if (videoPlayerController == null) return CircularProgressIndicator();
 
-    return VideoPlayer(videoPlayerController!);
+    return AspectRatio(
+      // 원본 바율로 확인 가능
+      aspectRatio: videoPlayerController!.value.aspectRatio,
+      child: VideoPlayer(videoPlayerController!),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -8,26 +9,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  XFile? video;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: getBoxdecoration(),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _Logo(),
-              SizedBox(
-                  // 간격 줄려고 이렇게 쓰는 경우도 많음
-                  height: 30.0),
-              _AppName()
-            ],
-          ),
+      body: video != null ? renderVideo() : renderEmpty(),
+    );
+  }
+
+  Widget renderVideo() {
+    return Center(
+      child: Text('Video'),
+    );
+  }
+
+  Widget renderEmpty() {
+    // 영상이 선택되지 않았을때 렌더링 하는 화면
+    return Container(
+      decoration: getBoxdecoration(),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _Logo(onTap: onLogoTab),
+            SizedBox(
+                // 간격 줄려고 이렇게 쓰는 경우도 많음
+                height: 30.0),
+            _AppName()
+          ],
         ),
       ),
     );
+  }
+
+  void onLogoTab() async {
+    final video = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
+
+    if (video != null) {
+      setState(() {
+        this.video = video;
+      });
+    }
   }
 
   BoxDecoration getBoxdecoration() {
@@ -47,11 +72,16 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _Logo extends StatelessWidget {
-  const _Logo({Key? key}) : super(key: key);
+  final VoidCallback onTap;
+
+  const _Logo({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/images/logo.png');
+    return GestureDetector(
+      child: Image.asset('assets/images/logo.png'),
+      onTap: onTap,
+    );
   }
 }
 

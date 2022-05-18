@@ -19,6 +19,7 @@ class CustomVideoPlayer extends StatefulWidget {
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   VideoPlayerController? videoPlayerController;
   Duration currentPosition = Duration();
+  bool showControls = false;
 
   @override
   void initState() {
@@ -75,22 +76,30 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     return AspectRatio(
       // 원본 바율로 확인 가능
       aspectRatio: videoPlayerController!.value.aspectRatio,
-      child: Stack(
-        children: [
-          VideoPlayer(videoPlayerController!),
-          _Controls(
-            onForwardPressed: onForwardPressed,
-            onPlayPressed: onPlayPressed,
-            onReversePressed: onReversePressed,
-            isPlaying: videoPlayerController!.value.isPlaying,
-          ),
-          _NewVideo(onPressed: onNewVideoPressed),
-          _SliderBottom(
-            currentPosition: currentPosition,
-            maxPosition: videoPlayerController!.value.duration,
-            onSliderChanged: onSliderChanged,
-          )
-        ],
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            showControls = !showControls;
+          });
+        },
+        child: Stack(
+          children: [
+            VideoPlayer(videoPlayerController!),
+            if (showControls)
+              _Controls(
+                onForwardPressed: onForwardPressed,
+                onPlayPressed: onPlayPressed,
+                onReversePressed: onReversePressed,
+                isPlaying: videoPlayerController!.value.isPlaying,
+              ),
+            if (showControls) _NewVideo(onPressed: onNewVideoPressed),
+            _SliderBottom(
+              currentPosition: currentPosition,
+              maxPosition: videoPlayerController!.value.duration,
+              onSliderChanged: onSliderChanged,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -6,10 +6,12 @@ import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
   final XFile video;
+  final VoidCallback onNewVideoPressed;
 
   CustomVideoPlayer({
     Key? key,
     required this.video,
+    required this.onNewVideoPressed,
   }) : super(key: key);
 
   @override
@@ -92,7 +94,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
                 onReversePressed: onReversePressed,
                 isPlaying: videoPlayerController!.value.isPlaying,
               ),
-            if (showControls) _NewVideo(onPressed: onNewVideoPressed),
+            if (showControls) _NewVideo(onPressed: widget.onNewVideoPressed),
             _SliderBottom(
               currentPosition: currentPosition,
               maxPosition: videoPlayerController!.value.duration,
@@ -109,8 +111,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       Duration(seconds: value.toInt()),
     );
   }
-
-  void onNewVideoPressed() {}
 
   void onForwardPressed() {
     // 현재 이 영상이 어떤 부분을 실행하고 있는지 알아야함

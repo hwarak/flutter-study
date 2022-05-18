@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CustomVideoPlayer(
         // 비디오가 null이 될 수 있어서 빨간줄이 뜨지만, 우리는 무조건 값이 있을때만 실행할거라 !를 붙혀주자
         video: video!,
+        onNewVideoPressed: onNewVideoPressed,
       ),
     );
   }
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _Logo(onTap: onLogoTab),
+            _Logo(onTap: onNewVideoPressed),
             SizedBox(
                 // 간격 줄려고 이렇게 쓰는 경우도 많음
                 height: 30.0),
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onLogoTab() async {
+  void onNewVideoPressed() async {
     final video = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
     );

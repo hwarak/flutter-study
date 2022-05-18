@@ -165,8 +165,8 @@ class _Controls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
       color: Colors.black.withOpacity(0.5),
+      height: MediaQuery.of(context).size.height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

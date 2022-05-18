@@ -103,9 +103,11 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
                           .toDouble(),
                       min: 0,
                       onChanged: (double value) {
-                        setState(() {
-                          currentPosition = Duration(seconds: value.toInt());
-                        });
+                        // 현재 double로 들어오는 value값은 이 영상의 위치임!!!
+                        // 그래서 이동한 포지션값을 duration값으로 변환할 수가있음
+                        videoPlayerController!.seekTo(
+                          Duration(seconds: value.toInt()),
+                        );
                       },
                       value: currentPosition.inSeconds.toDouble(),
                     ),

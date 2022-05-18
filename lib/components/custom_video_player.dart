@@ -70,6 +70,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             onForwardPressed: onForwardPressed,
             onPlayPressed: onPlayPressed,
             onReversePressed: onReversePressed,
+            isPlaying: videoPlayerController!.value.isPlaying,
           ),
           Positioned(
             right: 0, // 오른쪽 끝에서 0px만큼 이동시켜라
@@ -85,21 +86,63 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     );
   }
 
-  void onForwardPressed() {}
-  void onPlayPressed() {}
-  void onReversePressed() {}
+  void onForwardPressed() {
+    // 현재 이 영상이 어떤 부분을 실행하고 있는지 알아야함
+    final currentPosition = videoPlayerController!.value.position;
+
+    // 비디오의 전체 길이를 가져올 수 있다.
+    final maxPosition = videoPlayerController!.value.duration;
+
+    Duration position = maxPosition; // 전체길이로 초기화!
+
+    if ((maxPosition - Duration(seconds: 3)).inSeconds >
+        currentPosition.inSeconds) {
+      // 전체 비디오의 길이에서 3초를 뺀걸 초로 가져왔을때 현재포지션보다 길다면
+      position = currentPosition + Duration(seconds: 3);
+    }
+    videoPlayerController!.seekTo(position); // 설정한 position으로 이동하기
+  }
+
+  void onPlayPressed() {
+    // 이미 실행중이면 중지
+    // 실행중이 아니면 실행
+    setState(() {
+      // build를 실행해야 하기 때문에 setState()에 넣어준다
+      if (videoPlayerController!.value.isPlaying) {
+        videoPlayerController!.pause(); // 중지
+      } else {
+        videoPlayerController!.play(); //실행
+      }
+    });
+  }
+
+  void onReversePressed() {
+    // 현재 이 영상이 어떤 부분을 실행하고 있는지 알아야함
+    final currentPosition = videoPlayerController!.value.position;
+
+    Duration position = Duration(); // 우선 0초로 초기화!
+
+    if (currentPosition.inSeconds > 3) {
+      // 만약 currentPosition이 3초보다 작다면 ..! 예외가 생길 수 있다니깐
+      // 만약 우리가 실행하고 있는 부분을 초로 받았을때 3초보다 더 지났다면
+      position = currentPosition - Duration(seconds: 3);
+    }
+    videoPlayerController!.seekTo(position); // 설정한 position으로 이동하기
+  }
 }
 
 class _Controls extends StatelessWidget {
   final VoidCallback onPlayPressed;
   final VoidCallback onReversePressed;
   final VoidCallback onForwardPressed;
+  final bool isPlaying;
 
   const _Controls(
       {Key? key,
       required this.onPlayPressed,
       required this.onReversePressed,
-      required this.onForwardPressed})
+      required this.onForwardPressed,
+      required this.isPlaying})
       : super(key: key);
 
   @override
@@ -116,7 +159,7 @@ class _Controls extends StatelessWidget {
           ),
           renderIconButton(
             onPressed: onPlayPressed,
-            iconData: Icons.play_arrow,
+            iconData: isPlaying ? Icons.pause : Icons.play_arrow,
           ),
           renderIconButton(
             onPressed: onForwardPressed,

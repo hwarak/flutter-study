@@ -43,6 +43,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   }
 
   iniitializeController() async {
+    currentPosition = Duration();
     videoPlayerController = VideoPlayerController.file(
       // File 타입 : 실제 Flutter Framework에서 사용하고있는 File타입
       // XFile 타입 : ImagePicker에서만 사용하면 커스텀 파일 타입.

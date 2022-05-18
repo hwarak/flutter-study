@@ -18,6 +18,7 @@ class CustomVideoPlayer extends StatefulWidget {
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   VideoPlayerController? videoPlayerController;
+  Duration currentPosition = Duration();
 
   @override
   void initState() {
@@ -46,6 +47,17 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // 함수를 만들어야해!!! iniitializeController()만들어줌
     await videoPlayerController!.initialize();
 
+    // 영상이 실행 될 때마다, 컨트롤러의 값이 바뀔때마다 setStatet실행
+    videoPlayerController!.addListener(
+      () async {
+        // 비디오 컨트롤러의 값이 변경될때마다 실행된다
+        final currentPosition = videoPlayerController!.value.position;
+        setState(() {
+          this.currentPosition = currentPosition;
+        });
+      },
+    );
+
     setState(() {
       // 비디오 컨트롤러를 생성했으니 비디오컨트롤러에 맞게 UI를 새로 빌드해라
     });
@@ -72,19 +84,46 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             onReversePressed: onReversePressed,
             isPlaying: videoPlayerController!.value.isPlaying,
           ),
+          NewVideo(onPressed: onNewVideoPressed),
           Positioned(
-            right: 0, // 오른쪽 끝에서 0px만큼 이동시켜라
-            child: IconButton(
-              onPressed: () {},
-              color: Colors.white,
-              iconSize: 30.0,
-              icon: Icon(Icons.photo_camera_back),
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    '${currentPosition.inMinutes} : ${(currentPosition.inSeconds % 60).toString().padLeft(2, '0')}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Expanded(
+                    child: Slider(
+                      max: videoPlayerController!.value.duration.inSeconds
+                          .toDouble(),
+                      min: 0,
+                      onChanged: (double value) {
+                        setState(() {
+                          currentPosition = Duration(seconds: value.toInt());
+                        });
+                      },
+                      value: currentPosition.inSeconds.toDouble(),
+                    ),
+                  ),
+                  Text(
+                    '${videoPlayerController!.value.duration.inMinutes} : ${(videoPlayerController!.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           )
         ],
       ),
     );
   }
+
+  void onNewVideoPressed() {}
 
   void onForwardPressed() {
     // 현재 이 영상이 어떤 부분을 실행하고 있는지 알아야함
@@ -180,6 +219,24 @@ class _Controls extends StatelessWidget {
         iconData,
         size: 30.0,
         color: Colors.white,
+      ),
+    );
+  }
+}
+
+class NewVideo extends StatelessWidget {
+  final VoidCallback onPressed;
+  const NewVideo({Key? key, required this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      right: 0, // 오른쪽 끝에서 0px만큼 이동시켜라
+      child: IconButton(
+        onPressed: onPressed,
+        color: Colors.white,
+        iconSize: 30.0,
+        icon: Icon(Icons.photo_camera_back),
       ),
     );
   }

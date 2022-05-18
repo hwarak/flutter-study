@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   XFile? video;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

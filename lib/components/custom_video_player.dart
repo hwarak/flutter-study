@@ -31,6 +31,17 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     iniitializeController();
   }
 
+  @override
+  void didUpdateWidget(covariant CustomVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // oldWidget : 새로운 위젯이 생성되기 전의 위젯
+    // widget : 현재 위젯
+    if (oldWidget.video.path != widget.video.path) {
+      // 무조건 다른 영상이면
+      iniitializeController();
+    }
+  }
+
   iniitializeController() async {
     videoPlayerController = VideoPlayerController.file(
       // File 타입 : 실제 Flutter Framework에서 사용하고있는 File타입

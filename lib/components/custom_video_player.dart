@@ -84,44 +84,20 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             onReversePressed: onReversePressed,
             isPlaying: videoPlayerController!.value.isPlaying,
           ),
-          NewVideo(onPressed: onNewVideoPressed),
-          Positioned(
-            right: 0,
-            left: 0,
-            bottom: 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Text(
-                    '${currentPosition.inMinutes} : ${(currentPosition.inSeconds % 60).toString().padLeft(2, '0')}',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      max: videoPlayerController!.value.duration.inSeconds
-                          .toDouble(),
-                      min: 0,
-                      onChanged: (double value) {
-                        // 현재 double로 들어오는 value값은 이 영상의 위치임!!!
-                        // 그래서 이동한 포지션값을 duration값으로 변환할 수가있음
-                        videoPlayerController!.seekTo(
-                          Duration(seconds: value.toInt()),
-                        );
-                      },
-                      value: currentPosition.inSeconds.toDouble(),
-                    ),
-                  ),
-                  Text(
-                    '${videoPlayerController!.value.duration.inMinutes} : ${(videoPlayerController!.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
+          _NewVideo(onPressed: onNewVideoPressed),
+          _SliderBottom(
+            currentPosition: currentPosition,
+            maxPosition: videoPlayerController!.value.duration,
+            onSliderChanged: onSliderChanged,
           )
         ],
       ),
+    );
+  }
+
+  void onSliderChanged(double value) {
+    videoPlayerController!.seekTo(
+      Duration(seconds: value.toInt()),
     );
   }
 
@@ -226,9 +202,9 @@ class _Controls extends StatelessWidget {
   }
 }
 
-class NewVideo extends StatelessWidget {
+class _NewVideo extends StatelessWidget {
   final VoidCallback onPressed;
-  const NewVideo({Key? key, required this.onPressed}) : super(key: key);
+  const _NewVideo({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +215,52 @@ class NewVideo extends StatelessWidget {
         color: Colors.white,
         iconSize: 30.0,
         icon: Icon(Icons.photo_camera_back),
+      ),
+    );
+  }
+}
+
+class _SliderBottom extends StatelessWidget {
+  final Duration currentPosition;
+  final Duration maxPosition;
+  final ValueChanged<double> onSliderChanged;
+  const _SliderBottom(
+      {Key? key,
+      required this.currentPosition,
+      required this.maxPosition,
+      required this.onSliderChanged})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      right: 0,
+      left: 0,
+      bottom: 0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            Text(
+              '${currentPosition.inMinutes} : ${(currentPosition.inSeconds % 60).toString().padLeft(2, '0')}',
+              style: TextStyle(color: Colors.white),
+            ),
+            Expanded(
+              child: Slider(
+                max: maxPosition.inSeconds.toDouble(),
+                min: 0,
+                // 현재 double로 들어오는 value값은 이 영상의 위치임!!!
+                // 그래서 이동한 포지션값을 duration값으로 변환할 수가있음
+                onChanged: onSliderChanged,
+                value: currentPosition.inSeconds.toDouble(),
+              ),
+            ),
+            Text(
+              '${maxPosition.inMinutes} : ${(maxPosition.inSeconds % 60).toString().padLeft(2, '0')}',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }

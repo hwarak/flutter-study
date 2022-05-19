@@ -1,11 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hello_world">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="flutter_study"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBxxVaJWHh8GYb5TBh0ZKX3vI8G_x2gSvo"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
